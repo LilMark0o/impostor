@@ -1,0 +1,11 @@
+# Local only
+.env
+.env.local
+.DS_Store
+
+# Each half has its own repository and history; clone them side by side.
+api/
+web/
+
+# Generated media (video renders, posters) — keep out of the repo
+brag-output/

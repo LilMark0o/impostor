@@ -1,0 +1,54 @@
+# Run the whole game with one command:
+#
+#   docker compose up --build
+#
+# Then open http://localhost:5173
+#
+# Nothing here needs an API key. For the optional ones (LLM for custom
+# categories, Google login, Telegram delivery) put them in a `.env` file next
+# to this file — compose interpolates them automatically. See api/.env.example.
+
+name: impostor
+
+services:
+  api:
+    build: ./api
+    image: impostor-api
+    environment:
+      # Keep the SQLite file on a volume so rounds survive a restart.
+      DATABASE_URL: sqlite+aiosqlite:////data/impostor.db
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-dev-secret-change-in-prod}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-meta-llama/llama-3.3-70b-instruct:free}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN:-}
+    volumes:
+      - impostor-data:/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+
+  web:
+    build:
+      context: ./web
+      args:
+        # This URL is used by the BROWSER, not by the container.
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+    image: impostor-web
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "5173:80"
+
+volumes:
+  impostor-data:
