@@ -6,6 +6,10 @@ the impostor, who has to bluff through the conversation without knowing it.
 Three or more people, **one phone** that gets passed around. No installs, no
 accounts, no moderator.
 
+<p align="center">
+  <img src="docs/demo.gif" width="330" alt="Pasando el teléfono: cada jugador ve su carta">
+</p>
+
 > Open source under the MIT license. Runs with **zero API keys** — bring your
 > own only if you want the extras.
 
