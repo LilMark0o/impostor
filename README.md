@@ -30,14 +30,17 @@ docker compose up --build
 
 Open <http://localhost:5173>. That's it.
 
-No Docker? Run the two halves by hand — see [`api/README.md`](api/README.md)
-and [`web/README.md`](web/README.md). It's three commands each.
+No Docker? Run the two halves by hand — see
+[`impostor-api`](https://github.com/LilMark0o/impostor-api) and
+[`impostor-web`](https://github.com/LilMark0o/impostor-web). It's three
+commands each.
 
 ## Bring your own keys
 
 The game ships with its content: 34 categories, three difficulty tiers and 319
 curated hints for the impostor, all as plain Python in
-[`api/app/config.py`](api/app/config.py). A round never depends on a network
+[`app/config.py`](https://github.com/LilMark0o/impostor-api/blob/main/app/config.py).
+A round never depends on a network
 call.
 
 Optional keys, each unlocking one extra:
@@ -52,7 +55,7 @@ Optional keys, each unlocking one extra:
 
 LLM failures are swallowed on purpose: the static pools take over, so a bad
 key costs you a feature, never a round. Full table in
-[`api/.env.example`](api/.env.example).
+[`api/.env.example`](https://github.com/LilMark0o/impostor-api/blob/main/.env.example).
 
 ## How a round works
 
@@ -108,7 +111,7 @@ repos still carry a `railway.json`.
 
 ## Demos and ads
 
-Product-demo videos are built with [demo-forge](../demo-forge) (Playwright
+Product-demo videos are built with [demo-forge](https://github.com/LilMark0o/demo-forge) (Playwright
 screen recordings). The short vertical promo lives in `brag-output/`, built
 with HyperFrames — read `brag-output/brag-plan.md` before touching it. Music
 attribution is required (CC BY 4.0); see `brag-output/share-copy.txt`.
